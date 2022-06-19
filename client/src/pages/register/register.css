@@ -1,0 +1,66 @@
+#h1-register {
+  font-size: 18pt;
+  color: rgb(48, 65, 85);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0px;
+  line-height: 1em;
+}
+
+#span-register {
+  cursor: pointer;
+  color: #4831d4;
+}
+
+#img-register {
+  height: 60px;
+  object-fit: contain;
+}
+
+#logo {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 5px;
+  cursor: inherit;
+  width: 200px;
+}
+
+#register {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#form-register {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 5px;
+  border: 0px solid rgb(232, 232, 232);
+  padding: 16px;
+}
+
+#register form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#register form input {
+  width: 200px;
+  height: 30px;
+  margin: 5px;
+}
+
+#register form button {
+  width: 200px;
+  height: 30px;
+  margin-top: 10px;
+  border: none;
+  background-color: #4831d4;
+  color: white;
+}
+
+#register form button:hover {
+  background-color: rgb(59, 40, 174);
+}
