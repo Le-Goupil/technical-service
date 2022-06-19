@@ -5,6 +5,7 @@ import logo from "../../assets/everping_logo.png";
 import { auth } from "../../firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Register() {
   const [email, setEmail] = useState("");
