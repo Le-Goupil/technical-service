@@ -5,6 +5,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,12 +14,14 @@ export default function Login() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  const { dispatch } = useContext(AuthContext);
+
   const handleLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+        dispatch({ type: "LOGIN", payload: user });
         navigate("/");
       })
       .catch((error) => {
@@ -46,7 +50,10 @@ export default function Login() {
         <button type="submit">Connexion</button>
       </form>
       <p>
-        Vous n'avez pas de compte ? <span id="span-login" onClick={() => navigate("/register")}>Créer un compte</span>
+        Vous n'avez pas de compte ?{" "}
+        <span id="span-login" onClick={() => navigate("/register")}>
+          Créer un compte
+        </span>
       </p>
     </div>
   );
