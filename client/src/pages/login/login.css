@@ -1,4 +1,4 @@
-h1 {
+#h1-login {
   font-size: 18pt;
   color: rgb(48, 65, 85);
   font-weight: 600;
@@ -7,12 +7,12 @@ h1 {
   line-height: 1em;
 }
 
-span {
+#span-login {
   cursor: pointer;
   color: #4831d4;
 }
 
-img {
+#img-login {
   height: 60px;
   object-fit: contain;
 }
@@ -34,7 +34,7 @@ img {
   justify-content: center;
 }
 
-form {
+#form-login {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 5px;
   border: 0px solid rgb(232, 232, 232);
   padding: 16px;
