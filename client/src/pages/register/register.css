@@ -64,3 +64,11 @@
 #register form button:hover {
   background-color: rgb(59, 40, 174);
 }
+
+#error-register {
+  color: red;
+}
+
+#succes-register {
+  color: green;
+}
