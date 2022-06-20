@@ -1,0 +1,13 @@
+#home-spinner {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#spinner-img-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
