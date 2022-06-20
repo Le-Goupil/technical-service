@@ -11,11 +11,10 @@ import { AuthContext } from "../../context/AuthContext";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const { dispatch } = useContext(AuthContext);
-
   const handleLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -27,6 +26,7 @@ export default function Login() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        setError("Mauvais email ou mot de passe");
       });
   };
 
@@ -55,6 +55,7 @@ export default function Login() {
           Créer un compte
         </span>
       </p>
+      {error && <span id="error-login">{error}</span>}
     </div>
   );
 }
