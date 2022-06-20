@@ -1,3 +1,11 @@
+#login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #h1-login {
   font-size: 18pt;
   color: rgb(48, 65, 85);
@@ -24,14 +32,6 @@
   border-radius: 5px;
   cursor: inherit;
   width: 200px;
-}
-
-#login {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 #form-login {
