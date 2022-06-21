@@ -6,34 +6,30 @@ import {
   BrowserRouter,
   Navigate,
 } from "react-router-dom";
-import Login from "./pages/login/Login";
-import Home from "./pages/home/Home";
-import Register from "./pages/register/Register";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
 import { useState } from "react";
+import { useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
-import { useEffect } from "react";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const [isTechnicien, setIsTechnicien] = useState();
   const { currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    const fetchUserType = async (user) => {
+    const fetchUser = async (user) => {
       const docRef = doc(db, "user", user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const userRef = docSnap.data();
-        if (userRef.technicien) {
-          setIsTechnicien(true);
-        } else {
-          setIsTechnicien(false);
-        }
+        setUser({ data: docSnap.data(), id: user.uid });
       }
     };
-    fetchUserType(currentUser);
+    fetchUser(currentUser);
   }, [currentUser]);
 
   const RequireAuth = ({ children }) => {
@@ -50,7 +46,7 @@ function App() {
             index
             element={
               <RequireAuth>
-                <Home isTechnicien={isTechnicien} currentUser={currentUser} />
+                <Home user={user} />
               </RequireAuth>
             }
           />
