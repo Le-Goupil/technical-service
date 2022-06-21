@@ -1,6 +1,6 @@
 import React from "react";
-import Spinner from "../../assets/Spinner.svg";
 import "./home.css";
+import Spinner from "../../assets/Spinner.svg";
 import ClientHome from "../../components/ClientHome";
 import TechnicienHome from "../../components/TechnicienHome";
 
@@ -12,8 +12,8 @@ export default function Home(props) {
       </div>
     );
   } else if (props.isTechnicien) {
-    return <TechnicienHome />;
+    return <TechnicienHome currentUser={props.currentUser} />;
   } else {
-    return <ClientHome />;
+    return <ClientHome currentUser={props.currentUser} />;
   }
 }
