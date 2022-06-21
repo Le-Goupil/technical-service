@@ -1,3 +1,14 @@
+.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#home-body {
+  display: flex;
+  height: 100%
+}
+
 #home-spinner {
   height: 100vh;
   display: flex;
