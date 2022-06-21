@@ -1,8 +1,7 @@
+import "./App.css";
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Link,
   Routes,
   BrowserRouter,
   Navigate,
@@ -25,7 +24,6 @@ function App() {
     const fetchUserType = async (user) => {
       const docRef = doc(db, "user", user.uid);
       const docSnap = await getDoc(docRef);
-
       if (docSnap.exists()) {
         const userRef = docSnap.data();
         if (userRef.technicien) {
@@ -52,7 +50,7 @@ function App() {
             index
             element={
               <RequireAuth>
-                <Home isTechnicien={isTechnicien} />
+                <Home isTechnicien={isTechnicien} currentUser={currentUser} />
               </RequireAuth>
             }
           />
