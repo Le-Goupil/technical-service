@@ -1,8 +1,8 @@
 #header {
-  background-color: #4831d4;
   display: flex;
   flex-direction: row-reverse;
-  height: 2rem;
+  background-color: #4831d4;
+  height: 3rem;
 }
 
 #disconnect {
