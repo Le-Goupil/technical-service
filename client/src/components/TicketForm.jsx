@@ -47,7 +47,6 @@ export default function TicketForm(props) {
       messages: [],
       status: true,
       technicien: null,
-      room: null,
       survey: null,
       previousTicket: null,
     });
@@ -60,8 +59,6 @@ export default function TicketForm(props) {
       openTicket: arrayUnion(docId),
     });
   };
-
-  const createRoom = () => {};
 
   if (!confirmation) {
     return (
