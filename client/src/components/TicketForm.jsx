@@ -15,11 +15,13 @@ import { useEffect } from "react";
 export default function TicketForm(props) {
   const [sujet, setSujet] = useState();
   const [description, setDescription] = useState();
+  const [confirmation, setConfirmation] = useState();
   const [docId, setDocId] = useState();
 
   useEffect(() => {
     if (docId) {
       addTicketToUserDb(docId);
+      setDocId();
     }
   }, [docId]);
 
@@ -27,6 +29,11 @@ export default function TicketForm(props) {
     e.preventDefault();
     if (sujet && description) {
       addTicketToDb();
+      e.target.reset();
+      setConfirmation("Votre ticket a bien été envoyé");
+      setTimeout(() => {
+        props.setOpenTicket(false);
+      }, 3000);
     }
   };
 
@@ -54,25 +61,31 @@ export default function TicketForm(props) {
     });
   };
 
-  return (
-    <>
-      <p onClick={() => props.setOpenTicket(false)}>x</p>
-      <h1>
-        Remplissez le formulaire pour entrer en contact avec un technicien.
-      </h1>
-      <form id="ticket-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Sujet"
-          onChange={(e) => setSujet(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Decrivez votre probleme"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <button type="submit">Envoyez</button>
-      </form>
-    </>
-  );
+  const createRoom = () => {};
+
+  if (!confirmation) {
+    return (
+      <>
+        <p onClick={() => props.setOpenTicket(false)}>x</p>
+        <h1>
+          Remplissez le formulaire pour entrer en contact avec un technicien.
+        </h1>
+        <form id="ticket-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Sujet"
+            onChange={(e) => setSujet(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Decrivez votre probleme"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <button type="submit">Envoyez</button>
+        </form>
+      </>
+    );
+  } else {
+    return <h1>{confirmation}</h1>;
+  }
 }
