@@ -3,13 +3,10 @@ import "./style/ticketForm.css";
 import {
   doc,
   serverTimestamp,
-  setDoc,
   addDoc,
   updateDoc,
   arrayUnion,
-  getDoc,
   collection,
-  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState } from "react";
@@ -56,6 +53,7 @@ export default function TicketForm(props) {
       openTicket: arrayUnion(docId),
     });
   };
+
   return (
     <>
       <p onClick={() => props.setOpenTicket(false)}>x</p>
