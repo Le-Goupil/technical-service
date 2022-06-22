@@ -5,29 +5,39 @@ import {
   serverTimestamp,
   setDoc,
   addDoc,
+  updateDoc,
+  arrayUnion,
+  getDoc,
   collection,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function TicketForm(props) {
   const [sujet, setSujet] = useState();
   const [description, setDescription] = useState();
+  const [docId, setDocId] = useState();
+
+  useEffect(() => {
+    if (docId) {
+      addTicketToUserDb(docId);
+    }
+  }, [docId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    try {
+    if (sujet && description) {
       addTicketToDb();
-    } catch (e) {
-      console.log(e);
     }
   };
 
   const addTicketToDb = async () => {
     const collectionRef = collection(db, "ticket");
-    await addDoc(collectionRef, {
+    const docRef = await addDoc(collectionRef, {
       user: props.user.id,
-      creatingDate: new Date(),
+      creatingDate: serverTimestamp(),
       subject: sujet,
       description: description,
       messages: [],
@@ -36,6 +46,14 @@ export default function TicketForm(props) {
       room: null,
       survey: null,
       previousTicket: null,
+    });
+    setDocId(docRef);
+  };
+
+  const addTicketToUserDb = async () => {
+    const userRef = doc(db, "user", props.user.id);
+    await updateDoc(userRef, {
+      openTicket: arrayUnion(docId),
     });
   };
   return (
