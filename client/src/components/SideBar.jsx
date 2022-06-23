@@ -7,7 +7,6 @@ import { useState } from "react";
 
 export default function Sidebar(props) {
   const [ticketRef, setTicketRef] = useState([]);
-  const [ticketRoom, setTicketRoom] = useState();
 
   useEffect(() => {
     onSnapshot(doc(db, "user", props.user.id), (snapshot) => {
@@ -49,7 +48,14 @@ export default function Sidebar(props) {
         Montrer les tickets ouvert
       </button>
     ) : (
-      <button onClick={() => props.setOpenTicket(true)}>Creer un ticket</button>
+      <button
+        onClick={() => {
+          props.setRoomId();
+          props.setOpenTicket(true);
+        }}
+      >
+        Creer un ticket
+      </button>
     );
   };
 
@@ -60,7 +66,13 @@ export default function Sidebar(props) {
         {ticketRef ? (
           ticketRef.map((e) => {
             return (
-              <div className="chatbox" onClick={() => props.setRoomId(e.id)}>
+              <div
+                className="chatbox"
+                onClick={() => {
+                  props.setRoomId(e.id);
+                  props.setOpenTicket(false);
+                }}
+              >
                 <h2>Sujet : {e.data.subject}</h2>
                 {renderLastIndex(e.data.messages) ? (
                   <p>
