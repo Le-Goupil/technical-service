@@ -3,3 +3,26 @@
   padding: 0px;
   box-sizing: border-box;
 }
+
+.chatbox-list {
+  overflow: scroll;
+}
+
+.message-container {
+  overflow: scroll;
+  height: 100%;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.chat input {
+  width: 100%;
+}
+
+#sendMessage {
+  width: 100%;
+}
