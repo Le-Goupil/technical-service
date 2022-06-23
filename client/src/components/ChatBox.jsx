@@ -53,7 +53,9 @@ export default function ChatBox(props) {
               <div>
                 <h2>{e.username} : </h2>
                 <p>{e.message}</p>
-                {/* <p className="time">{e.sendTime}</p> */}
+                {props.user.data.technicien && (
+                  <button>Fermer la conversation sur ce message</button>
+                )}
               </div>
             );
           })}
