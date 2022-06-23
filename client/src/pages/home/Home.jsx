@@ -11,7 +11,7 @@ export default function Home(props) {
   const [openTicket, setOpenTicket] = useState(false);
   const [ticketBoard, setTicketBoard] = useState(false);
   const [roomId, setRoomId] = useState();
-  const [sendMessage, setSendMessage] = useState();
+  const [,] = useState();
 
   if (props.user === undefined) {
     return (
@@ -30,24 +30,13 @@ export default function Home(props) {
             user={props.user}
             setOpenTicket={setOpenTicket}
             setRoomId={setRoomId}
-            sendMessage={sendMessage}
             setTicketBoard={setTicketBoard}
           />
           {openTicket && (
-            <TicketForm
-              setOpenTicket={setOpenTicket}
-              user={props.user}
-              sendMessage={sendMessage}
-            />
+            <TicketForm setOpenTicket={setOpenTicket} user={props.user} />
           )}
           {roomId && (
-            <ChatBox
-              setRoomId={setRoomId}
-              roomId={roomId}
-              user={props.user}
-              setSendMessage={setSendMessage}
-              sendMessage={sendMessage}
-            />
+            <ChatBox setRoomId={setRoomId} roomId={roomId} user={props.user} />
           )}
           {ticketBoard && (
             <TicketBoard setTicketBoard={setTicketBoard} user={props.user} />
