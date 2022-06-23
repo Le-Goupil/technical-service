@@ -9,7 +9,8 @@ import ChatBox from "../../components/ChatBox";
 
 export default function Home(props) {
   const [openTicket, setOpenTicket] = useState(false);
-  const [openChatRoom, setOpenChatRoom] = useState();
+  const [roomId, setRoomId] = useState();
+  const [sendMessage, setSendMessage] = useState();
 
   if (props.user === undefined) {
     return (
@@ -27,13 +28,24 @@ export default function Home(props) {
           <Sidebar
             user={props.user}
             setOpenTicket={setOpenTicket}
-            setOpenChatRoom={setOpenChatRoom}
+            setRoomId={setRoomId}
+            sendMessage={sendMessage}
           />
           {openTicket && (
-            <TicketForm setOpenTicket={setOpenTicket} user={props.user} />
+            <TicketForm
+              setOpenTicket={setOpenTicket}
+              user={props.user}
+              sendMessage={sendMessage}
+            />
           )}
-          {openChatRoom && (
-            <ChatBox setOpenChatRoom={setOpenChatRoom} user={props.user} />
+          {roomId && (
+            <ChatBox
+              setRoomId={setRoomId}
+              roomId={roomId}
+              user={props.user}
+              setSendMessage={setSendMessage}
+              sendMessage={sendMessage}
+            />
           )}
         </div>
       </div>
