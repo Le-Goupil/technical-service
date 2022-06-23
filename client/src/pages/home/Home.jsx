@@ -6,9 +6,10 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/SideBar";
 import TicketForm from "../../components/TicketForm";
 import ChatBox from "../../components/ChatBox";
-
+import TicketBoard from "../../components/TicketBoard";
 export default function Home(props) {
   const [openTicket, setOpenTicket] = useState(false);
+  const [ticketBoard, setTicketBoard] = useState(false);
   const [roomId, setRoomId] = useState();
   const [sendMessage, setSendMessage] = useState();
 
@@ -30,6 +31,7 @@ export default function Home(props) {
             setOpenTicket={setOpenTicket}
             setRoomId={setRoomId}
             sendMessage={sendMessage}
+            setTicketBoard={setTicketBoard}
           />
           {openTicket && (
             <TicketForm
@@ -46,6 +48,9 @@ export default function Home(props) {
               setSendMessage={setSendMessage}
               sendMessage={sendMessage}
             />
+          )}
+          {ticketBoard && (
+            <TicketBoard setTicketBoard={setTicketBoard} user={props.user} />
           )}
         </div>
       </div>
