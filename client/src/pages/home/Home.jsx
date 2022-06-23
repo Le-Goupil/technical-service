@@ -11,7 +11,6 @@ export default function Home(props) {
   const [openTicket, setOpenTicket] = useState(false);
   const [ticketBoard, setTicketBoard] = useState(false);
   const [roomId, setRoomId] = useState();
-  const [,] = useState();
 
   if (props.user === undefined) {
     return (
