@@ -19,6 +19,10 @@ export default function ChatBox(props) {
   const [message, setMessage] = useState();
   const [displayMessages, setDisplayMessages] = useState();
 
+  // useEffect(() => {
+  //   getMessages();
+  // }, [props.sendMessage, props.roomId]);
+
   useEffect(() => {
     const q = query(doc(db, "ticket", props.roomId));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -37,7 +41,7 @@ export default function ChatBox(props) {
   const sendMessage = async (e) => {
     e.preventDefault();
     addMessageToDb();
-    props.setSendMessage(Math.random());
+    e.target.reset();
   };
 
   const addMessageToDb = async () => {
