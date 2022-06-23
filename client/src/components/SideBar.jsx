@@ -1,38 +1,48 @@
 import React from "react";
 import "./style/sidebar.css";
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
+import { doc, onSnapshot, getDoc, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect } from "react";
 import { useState } from "react";
 
 export default function Sidebar(props) {
-  const [ticketRef, setTicketRef] = useState([]);
+  const [ticketDisplay, setTicketDisplay] = useState([]);
 
   useEffect(() => {
-    onSnapshot(doc(db, "user", props.user.id), (snapshot) => {
-      const data = snapshot.data();
-      setTicketRef([]);
+    const q = query(doc(db, "user", props.user.id));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const ticket = [];
       if (!props.user.data.technicien) {
-        data.openTicket.map((e) => {
-          getTicketData(e);
+        querySnapshot.data().openTicket.forEach((doc) => {
+          const getTicketData = async () => {
+            const dataFromTicket = await getDoc(doc);
+            if (dataFromTicket.data()) {
+              ticket.push({
+                data: dataFromTicket.data(),
+                id: dataFromTicket.data().id,
+              });
+              setTicketDisplay(ticket);
+            }
+          };
+          getTicketData();
         });
       } else {
-        data.handleTicket.map((e) => {
-          getTicketData(e);
+        querySnapshot.data().handleTicket.forEach((doc) => {
+          const getTicketData = async () => {
+            const dataFromTicket = await getDoc(doc);
+            if (dataFromTicket.data()) {
+              ticket.push({
+                data: dataFromTicket.data(),
+                id: dataFromTicket.data().id,
+              });
+              setTicketDisplay(ticket);
+            }
+          };
+          getTicketData();
         });
       }
     });
-
-    const getTicketData = async (e) => {
-      const ticket = await getDoc(e);
-      if (ticket.data()) {
-        setTicketRef((ticketRef) => [
-          ...ticketRef,
-          { data: ticket.data(), id: ticket.id },
-        ]);
-      }
-    };
-  }, [props.sendMessage]);
+  }, []);
 
   const renderProperMessage = (message) => {
     return message.length > 20 ? message.slice(0, 20) + "..." : message;
@@ -44,7 +54,12 @@ export default function Sidebar(props) {
 
   const renderCorrectButton = () => {
     return props.user.data.technicien ? (
-      <button onClick={() => props.setTicketBoard(true)}>
+      <button
+        onClick={() => {
+          props.setRoomId();
+          props.setTicketBoard(true);
+        }}
+      >
         Montrer les tickets ouvert
       </button>
     ) : (
@@ -63,20 +78,21 @@ export default function Sidebar(props) {
     <div className="sidebar">
       {renderCorrectButton()}
       <div className="chatbox-list">
-        {ticketRef ? (
-          ticketRef.map((e) => {
+        {ticketDisplay ? (
+          ticketDisplay.map((e) => {
             return (
               <div
                 className="chatbox"
                 onClick={() => {
                   props.setRoomId(e.id);
+                  props.setTicketBoard(false);
                   props.setOpenTicket(false);
                 }}
               >
                 <h2>Sujet : {e.data.subject}</h2>
                 {renderLastIndex(e.data.messages) ? (
                   <p>
-                    Dernier message <br />
+                    Dernier message : <br />
                     {renderLastIndex(e.data.messages).username} :{" "}
                     {renderProperMessage(
                       renderLastIndex(e.data.messages).message
