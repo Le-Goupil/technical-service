@@ -8,6 +8,9 @@ import {
   arrayUnion,
   serverTimestamp,
   Timestamp,
+  QuerySnapshot,
+  query,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect } from "react";
@@ -17,8 +20,19 @@ export default function ChatBox(props) {
   const [displayMessages, setDisplayMessages] = useState();
 
   useEffect(() => {
-    getMessages();
-  }, [props.sendMessage, props.roomId]);
+    const q = query(doc(db, "ticket", props.roomId));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const messages = [];
+      querySnapshot.data().messages.forEach((doc) => {
+        messages.push({
+          sendTime: doc.sendTime,
+          username: doc.username,
+          message: doc.message,
+        });
+      });
+      setDisplayMessages(messages);
+    });
+  });
 
   const sendMessage = async (e) => {
     e.preventDefault();
