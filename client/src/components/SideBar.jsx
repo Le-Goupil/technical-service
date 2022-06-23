@@ -13,9 +13,15 @@ export default function Sidebar(props) {
     onSnapshot(doc(db, "user", props.user.id), (snapshot) => {
       const data = snapshot.data();
       setTicketRef([]);
-      data.openTicket.map((e) => {
-        getTicketData(e);
-      });
+      if (!props.user.data.technicien) {
+        data.openTicket.map((e) => {
+          getTicketData(e);
+        });
+      } else {
+        data.handleTicket.map((e) => {
+          getTicketData(e);
+        });
+      }
     });
 
     const getTicketData = async (e) => {
@@ -37,14 +43,19 @@ export default function Sidebar(props) {
     return array[array.length - 1];
   };
 
+  const renderCorrectButton = () => {
+    return props.user.data.technicien ? (
+      <button onClick={() => props.setTicketBoard(true)}>
+        Montrer les tickets ouvert
+      </button>
+    ) : (
+      <button onClick={() => props.setOpenTicket(true)}>Creer un ticket</button>
+    );
+  };
+
   return (
     <div className="sidebar">
-      {!props.user.technicien && (
-        <button onClick={() => props.setOpenTicket(true)}>
-          Creer un ticket
-        </button>
-      )}
-
+      {renderCorrectButton()}
       <div className="chatbox-list">
         {ticketRef ? (
           ticketRef.map((e) => {
