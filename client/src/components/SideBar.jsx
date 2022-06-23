@@ -1,6 +1,6 @@
 import React from "react";
 import "./style/sidebar.css";
-import { collection, doc, onSnapshot, getDoc } from "firebase/firestore";
+import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -27,7 +27,15 @@ export default function Sidebar(props) {
         ]);
       }
     };
-  }, []);
+  }, [props.sendMessage]);
+
+  const renderProperMessage = (message) => {
+    return message.length > 20 ? message.slice(0, 20) + "..." : message;
+  };
+
+  const renderLastIndex = (array) => {
+    return array[array.length - 1];
+  };
 
   return (
     <div className="sidebar">
@@ -41,14 +49,15 @@ export default function Sidebar(props) {
         {ticketRef ? (
           ticketRef.map((e) => {
             return (
-              <div
-                className="chatbox"
-                onClick={() => props.setOpenChatRoom(e.id)}
-              >
+              <div className="chatbox" onClick={() => props.setRoomId(e.id)}>
                 <h2>Sujet : {e.data.subject}</h2>
-                {e.data.messages[e.data.messages.length - 1] ? (
+                {renderLastIndex(e.data.messages) ? (
                   <p>
-                    Last message : {e.data.message[e.data.message.length - 1]}
+                    Dernier message <br />
+                    {renderLastIndex(e.data.messages).username} :{" "}
+                    {renderProperMessage(
+                      renderLastIndex(e.data.messages).message
+                    )}
                   </p>
                 ) : (
                   <p>Il n'y a pas de message actuellement</p>
