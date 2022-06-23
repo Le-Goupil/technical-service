@@ -4,4 +4,17 @@
   background-color: #4831d4;
   height: 100%;
   min-width: 20rem;
+  max-width: 20rem;
+  color: white;
+}
+
+.chatbox {
+  cursor: pointer;
+  margin-top: 1px;
+  padding: 10px;
+  border: solid 2px black;
+}
+
+.chatbox:hover {
+  background-color: rgb(59, 40, 174);
 }
