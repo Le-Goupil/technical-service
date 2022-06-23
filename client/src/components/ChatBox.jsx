@@ -18,7 +18,7 @@ export default function ChatBox(props) {
 
   useEffect(() => {
     getMessages();
-  }, [props.sendMessage]);
+  }, [props.sendMessage, props.roomId]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
