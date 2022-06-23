@@ -21,6 +21,7 @@ export default function TicketForm(props) {
   useEffect(() => {
     if (docId) {
       addTicketToUserDb(docId);
+      updateFreshTicket();
       setDocId();
     }
   }, [docId]);
@@ -40,15 +41,15 @@ export default function TicketForm(props) {
   const addTicketToDb = async () => {
     const collectionRef = collection(db, "ticket");
     const docRef = await addDoc(collectionRef, {
-      user: props.user.id,
+      user: { id: props.user.id, username: props.user.data.username },
       creatingDate: serverTimestamp(),
       subject: sujet,
       description: description,
       messages: [],
       status: true,
-      technicien: null,
-      survey: null,
-      previousTicket: null,
+      technicien: "",
+      survey: {},
+      previousTicket: {},
     });
     setDocId(docRef);
   };
@@ -57,6 +58,12 @@ export default function TicketForm(props) {
     const userRef = doc(db, "user", props.user.id);
     await updateDoc(userRef, {
       openTicket: arrayUnion(docId),
+    });
+  };
+
+  const updateFreshTicket = async () => {
+    await updateDoc(docId, {
+      id: docId.id,
     });
   };
 
