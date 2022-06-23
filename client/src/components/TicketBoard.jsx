@@ -18,7 +18,6 @@ import Spinner from "../assets/Spinner.svg";
 
 export default function TicketBoard(props) {
   const [ticketOpen, setTicketOpen] = useState();
-  const [username, setUserName] = useState();
   const [docId, setDocId] = useState();
   console.log(docId);
   useEffect(() => {
